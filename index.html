@@ -4,40 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hyeve's Cloud</title>
-
   <link rel="stylesheet" href="css/index.css">
   <link rel="icon" type="image/png" href="ico.png"/>
-
-  <script type="module" src="js/index.js" async></script>
-  <!--
-    the `async` tag will make the script load asynchronously without blocking the page
-    the scripts are also executed before the page has fully finished loading!
-    there's a `defer` tag that makes the script run after, but it's much better to do
-
-      window.addEventListener("load", () => {
-        // do stuff after the page loads and all the content is available
-        // and can be queried using document.getElementById/document.querySelector and modified
-      });
-
-    for example, in case you want to get some data, you can do a request while the page is still loaded and display the dynamic content right after
-    so that looks like the page loaded with the dynamic content already being there
-
-    you can also add more scripts, but it's much better to use type="module"
-    which lets you use `import` and `export` in the script:
-
-      import { doStuff } from "./something.js";
-      import "./something-else.js";
-
-      export const SOME_CONSTANT = 69;
-
-      export function doMoreStuff() {
-        ...
-      }
-
-    if you have multiple script tags, it'll be much harder to maintain the code since you will have to ensure the right order of imports in this HTML file,
-    and everything will just be defined globally instead of being able to export things from one file and import from another
-  -->
 </head>
+
 <body class="root">
 <div class="anim-layer"></div>
 <div class="float-animate">
@@ -45,6 +15,12 @@
 </div>
 <div class="content-box">
   <div class="content-title-box">
+    <div class="tabs-container">
+      <div class="tab">projects</div>
+      <div class="tab">posts</div>
+      <div class="tab">contact</div>
+
+    </div>
     <h2 class="content-title-text">< About ></h2>
   </div>
   <article class="content-text">
