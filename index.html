@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hyeve's Cloud</title>
+
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="icon" type="image/png" href="ico.png"/>
+
+  <script type="module" src="js/index.js" async></script>
+  <!--
+    the `async` tag will make the script load asynchronously without blocking the page
+    the scripts are also executed before the page has fully finished loading!
+    there's a `defer` tag that makes the script run after, but it's much better to do
+
+      window.addEventListener("load", () => {
+        // do stuff after the page loads and all the content is available
+        // and can be queried using document.getElementById/document.querySelector and modified
+      });
+
+    for example, in case you want to get some data, you can do a request while the page is still loaded and display the dynamic content right after
+    so that looks like the page loaded with the dynamic content already being there
+
+    you can also add more scripts, but it's much better to use type="module"
+    which lets you use `import` and `export` in the script:
+
+      import { doStuff } from "./something.js";
+      import "./something-else.js";
+
+      export const SOME_CONSTANT = 69;
+
+      export function doMoreStuff() {
+        ...
+      }
+
+    if you have multiple script tags, it'll be much harder to maintain the code since you will have to ensure the right order of imports in this HTML file,
+    and everything will just be defined globally instead of being able to export things from one file and import from another
+  -->
+</head>
+<body class="root">
+<div class="anim-layer"></div>
+<div class="float-animate">
+  <h1 class="header-text" data-text="Hyeve's Cloud">Hyeve's Cloud</h1>
+</div>
+<div class="content-box">
+  <div class="content-title-box">
+    <h2 class="content-title-text">< About ></h2>
+  </div>
+  <article class="content-text">
+    <p style="margin-top: 0">
+      Hewwo! I go by <strong>hyeve (she/they)</strong> online, though people usually shorten it to just eve.
+      I'm a fully self-taught <strong>game developer & generalist programmer,</strong> with a particular interest in <strong>graphics</strong> and artistic projects.
+    </p>
+    <p>
+      I've been coding in various forms for <strong>over a decade</strong> now!
+    </p>
+    <p>
+      Particularly notable skills include <br> <strong> Unity, C++, OpenGL, GLSL, HLSL, and C#, </strong> <br> all of which I'm very comfortable with and have been using in both <strong>personal and professional</strong> projects for years.
+    </p>
+    <p>
+      I'm also pretty capable at <strong>video editing</strong> (over 100 completed freelance videos!), and have at least had a go at pretty much all creative digital work -
+      <strong>design, digital art </strong>(both 3D and 2D),<strong> music,</strong> etc.
+    </p>
+    <p class="quote-text">
+      weaving digital dreams into pixels on your screen
+    </p>
+  </article>
+</div>
+<div class="buttons">
+
+</div>
+</body>
+</html>
