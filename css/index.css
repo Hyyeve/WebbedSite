@@ -203,6 +203,12 @@ a:hover, a:active {
   align-items: center;
 }
 
+.link-box-separator {
+  font-family: var(--HEADER_FONT), sans-serif;
+  font-size: 1.5em;
+  color: var(--BODY_TEXT_COL);
+}
+
 .link-box-title {
   font-family: var(--HEADER_FONT), sans-serif;
 }
@@ -226,6 +232,13 @@ a:hover, a:active {
   width: 30px;
   height: 30px;
   margin-left: 10px;
+}
+
+.tools-note {
+  font-family: var(--BODY_FONT), sans-serif;
+  font-size: 0.8rem;
+  font-weight: bold;
+  padding-left: 10px;
 }
 
 .content-text {
