@@ -29,6 +29,15 @@
   margin: 0;
 }
 
+a:link, a:visited {
+  color: rgb(74, 74, 229);
+  text-decoration: none;
+}
+
+a:hover, a:active {
+  color: #ff5fb2;
+}
+
 .anim-layer {
   width: 100vw;
   height: 100vh;
@@ -100,6 +109,7 @@
   border-radius: var(--BORDER_RADIUS);
   margin: auto;
   overflow: hidden;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
 }
 
 .content-title-box {
@@ -113,31 +123,109 @@
   line-height: calc(var(--SIZE) * 0.2);
   font-size: 4rem;
   color: var(--HEADER_TEXT_COL);
-  rotate: -4deg;
   text-shadow: 0 0 25px var(--TEXT_SHADOW_COL);
+}
+
+.content-main-box {
+  border-top: 10px solid var(--CRYSTAL_BORDER_COL);
+  padding-top: 10px;
+  box-shadow: inset 0 0 30px rgba(100, 100, 100, 0.2);
 }
 
 .tabs-container {
   display: flex;
   justify-content: stretch;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  margin-bottom: 10px;
+  border-radius: 0 0 20px 20px;
+  backdrop-filter: brightness(0.9);
+  overflow: hidden;
 }
 
-.tab {
+.tab-label {
   width: auto;
   flex-grow: 1;
   font-size: 1.1rem;
   color: var(--HEADER_TEXT_COL);
   padding-top: 5px;
   padding-bottom: 5px;
-  margin-bottom: 5px;
   text-shadow: 0 0 10px var(--TEXT_SHADOW_COL);
-  background-color: rgba(0,0,255,0.1);
-  backdrop-filter: brightness(0.9);
+  background-color: rgba(0, 0, 255, 0.1);
   z-index: 1;
 }
 
-.tab:hover {
+.tab-input,
+#about:not(:checked) ~ .content-main-box .about-section,
+#projects:not(:checked) ~ .content-main-box .projects-section,
+#posts:not(:checked) ~ .content-main-box .posts-section,
+#contact:not(:checked) ~ .content-main-box .contact-section,
+
+#about:not(:checked) ~ .content-title-box .about-title,
+#projects:not(:checked) ~ .content-title-box .projects-title,
+#posts:not(:checked) ~ .content-title-box .posts-title,
+#contact:not(:checked) ~ .content-title-box .contact-title {
+  display: none;
+}
+
+.tab-label:hover,
+#about:checked ~ .content-title-box .tabs-container .tab-label[for="about"],
+#projects:checked ~ .content-title-box .tabs-container .tab-label[for="projects"],
+#posts:checked ~ .content-title-box .tabs-container .tab-label[for="posts"],
+#contact:checked ~ .content-title-box .tabs-container .tab-label[for="contact"] {
   color: rgb(255, 180, 230);
+}
+
+{
+  color: rgb(255, 180, 230)
+;
+}
+
+.projects-section, .posts-section {
+  padding: 10px 0px;
+}
+
+.link-box {
+  font-size: 1.1rem;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2), inset 0 0 15px rgba(0, 0, 0, 0.3);
+  border: 3px solid var(--CRYSTAL_BORDER_COL);
+  font-family: var(--BODY_FONT), sans-serif;
+  background-image: var(--BG_IMG);
+  background-position: 50% 46.5%;
+  background-size: 150%;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-bottom: 20px;
+  border-radius: 15px;
+  margin-left: 15px;
+  margin-right: 15px;
+  display: flex;
+  align-content: space-between;
+  align-items: center;
+}
+
+.link-box-title {
+  font-family: var(--HEADER_FONT), sans-serif;
+}
+
+.link-box-title, .link-box-text {
+  color: var(--BODY_TEXT_COL);
+  text-align: left;
+  padding-left: 15px;
+  margin: 3px;
+}
+
+.link-icons {
+  flex: auto;
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  margin-right: 20px;
+}
+
+.link-icon {
+  width: 30px;
+  height: 30px;
+  margin-left: 10px;
 }
 
 .content-text {
