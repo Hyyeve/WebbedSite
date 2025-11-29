@@ -1,1 +1,3 @@
 I just wrote it all from scratch in html and css... 
+
+I have almost no experience with webdev, so apologies for any horrors within.. i tried to make it a little organized at least!
