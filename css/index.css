@@ -43,6 +43,7 @@
 #posts:checked ~ .content-title-box .tabs-container .tab-label[for="posts"],
 #contact:checked ~ .content-title-box .tabs-container .tab-label[for="contact"] {
   color: rgb(255, 180, 230);
+  cursor: pointer;
 }
 
 {

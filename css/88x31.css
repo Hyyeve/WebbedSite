@@ -1,0 +1,12 @@
+.webring-box {
+  display: inline-block;
+  border-radius: 5px;
+  overflow: hidden;
+  width: 88px;
+  height: 31px;
+}
+
+.webring-box > img {
+  image-rendering: pixelated;
+  vertical-align: bottom;
+}

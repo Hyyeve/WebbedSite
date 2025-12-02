@@ -2,10 +2,10 @@
   background-color: var(--CRYSTAL_BG_COL);
   backdrop-filter: blur(25px);
   border: 10px solid var(--CRYSTAL_BORDER_COL);
-  margin: auto;
   overflow: hidden;
   border-radius: 40px;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.3), inset 0 0 30px rgba(100, 100, 100, 0.2);
+  margin: auto auto 100px;
 }
 
 .content-title-box {
