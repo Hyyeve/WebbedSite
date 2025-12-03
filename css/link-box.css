@@ -1,26 +1,20 @@
-.link-box, .link-box-important {
-  font-size: 1.1rem;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2), inset 0 0 15px rgba(0, 0, 0, 0.3);
-  border: 3px solid var(--CRYSTAL_BORDER_COL);
+.link-box {
+  font-size: var(--BODY_FONT_SIZE);
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2), inset 0 0 1rem rgba(0, 0, 0, 0.3);
+  border: 0.2rem solid var(--CRYSTAL_BORDER_COL);
   font-family: var(--BODY_FONT), sans-serif;
   background-image: var(--BG_IMG);
   background-position: 50% 46.5%;
   background-size: 150%;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  margin-bottom: 20px;
-  border-radius: 15px;
-  margin-left: 15px;
-  margin-right: 15px;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+  margin-bottom: 1.3rem;
+  border-radius: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
   display: flex;
   align-content: space-between;
   align-items: center;
-}
-
-.link-box-separator {
-  font-family: var(--HEADER_FONT), sans-serif;
-  font-size: 1.5em;
-  color: var(--BODY_TEXT_COL);
 }
 
 .link-box-title {
@@ -30,8 +24,8 @@
 .link-box-title, .link-box-text {
   color: var(--BODY_TEXT_COL);
   text-align: left;
-  padding-left: 15px;
-  margin: 3px;
+  padding-left: 1rem;
+  margin: 0.2rem;
 }
 
 .link-icons {
@@ -39,18 +33,18 @@
   display: flex;
   align-items: center;
   flex-direction: row-reverse;
-  margin-right: 20px;
+  margin-right: 1.3rem;
 }
 
 .link-icon {
-  width: 30px;
-  height: 30px;
-  margin-left: 10px;
+  width: 2rem;
+  height: 2rem;
+  margin-left: 0.7rem;
 }
 
-.tools-note {
+.link-box-note {
   font-family: var(--BODY_FONT), sans-serif;
-  font-size: 0.8rem;
+  font-size: var(--NOTE_FONT_SIZE);
   font-weight: bold;
-  padding-left: 10px;
+  padding-left: 0.7rem;
 }

@@ -3,19 +3,34 @@
   src: url('font/Buycat.ttf');
 }
 
+@font-face {
+  font-family: TommySoft;
+  src: url('font/Tommy Soft.otf');
+}
+
 .root {
+
+
+  --HEADER_FONT_SIZE: 5rem;
+  --TITLE_FONT_SIZE: 4rem;
+  --BODY_FONT_SIZE: 1.1rem;
+  --NOTE_FONT_SIZE: 0.8rem;
+
+  --MAIN_BORDER_WIDTH: 0.7rem;
+  --MAIN_BORDER_RADIUS: 2.8rem;
+
   --HEADER_FONT: Buycat;
+  --BODY_FONT: TommySoft;
+
   --HEADER_TEXT_COL: white;
-
-  --BODY_FONT: MADE Tommy Soft;
+  --HEADER_OUTLINE_COL: rgba(79, 98, 173, 0.3);
   --BODY_TEXT_COL: rgb(55, 59, 86);
-
   --QUOTE_TEXT_COL: rgb(144, 126, 176);
-
   --CRYSTAL_BG_COL: rgba(255, 255, 255, 0.2);
   --CRYSTAL_BORDER_COL: rgba(255, 255, 255, 0.5);
-
   --TEXT_SHADOW_COL: rgba(60, 40, 50, 0.7);
+  --LINK_COL: rgb(74, 74, 229);
+  --LINK_HOVER_COL: #ff5fb2;
 
   --BG_IMG: url('../img/fill.png');
 
@@ -29,12 +44,13 @@
 }
 
 a:link:not(.no-style-link), a:visited:not(.no-style-link) {
-  color: rgb(74, 74, 229);
+  color: var(--LINK_COL);
   text-decoration: none;
 }
 
 a:hover:not(.no-style-link), a:active:not(.no-style-link) {
-  color: #ff5fb2;
+  color: var(--LINK_HOVER_COL);
+  text-decoration: none;
 }
 
 .no-style-link {

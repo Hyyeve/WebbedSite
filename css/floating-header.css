@@ -1,9 +1,15 @@
+.header-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 13.3rem;
+}
+
 .header-text {
-  position: relative;
-  font-size: 5rem;
+  position: absolute;
+  font-size: var(--HEADER_FONT_SIZE);
   color: var(--HEADER_TEXT_COL);
-  padding-bottom: 20px;
-  text-shadow: 0 0 25px var(--TEXT_SHADOW_COL);
+  text-shadow: 0 0 1.8rem var(--TEXT_SHADOW_COL);
 }
 
 .header-text:after {
@@ -11,5 +17,5 @@
   content: attr(data-text);
   z-index: -1;
   inset: 0;
-  -webkit-text-stroke: 0.2em rgba(79, 98, 173, 0.3);
+  -webkit-text-stroke: calc(var(--HEADER_FONT_SIZE) * 0.2) var(--HEADER_OUTLINE_COL);
 }
