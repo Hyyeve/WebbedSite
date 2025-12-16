@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta property="og:title" content="GML Reverse Engineering">
+  <meta property="og:description" content="or how to abuse Gamemakers scripting language to leak internal apis"/>
+  <meta charset="UTF-8">
+  <title>GML Reverse Engineering</title>
+  <link rel="stylesheet" href="../css/shared.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/content-box.css">
+  <link rel="stylesheet" href="../css/link-box.css">
+  <link rel="stylesheet" href="../css/floating-header.css">
+  <link rel="stylesheet" href="../css/image-box.css">
+  <link rel="stylesheet" href="../css/post.css">
+  <link rel="icon" type="image/png" href="../ico.png"/>
+</head>
+<body class="root">
+<div class="anim-layer"></div>
+<div class="header-container">
+  <h1 class="header-text float-animate" data-text="Hyeve's Cloud"><a href="../index.html" class="no-style-link">Hyeve's Cloud</a></h1>
+</div>
+
+<div class="content-box">
+  <div class="content-title-box">
+    <h2 class="content-title-text" style="rotate: -3deg; padding-top:5px; font-size:2.5rem">< GML Reverse Engineering ></h2>
+  </div>
+  <div class="content-main-box">
+    <article class="content-text">
+      <p style="margin-top: 0">
+        So, a while ago now, I was experimenting with <a href="https://gamemaker.io/en">Gamemaker Studio 2</a> - an all-in-one
+        2D game engine mainly aimed at beginners. It's honestly, pretty neat, though it's definitely lacking in some areas.
+      </p>
+
+      <p>
+        One of the big features it has is a custom scripting language - GML.
+      </p>
+
+      <div class="image-box">
+        <a href="../img/posts/gamemaker-reversing/editor.png">
+          <img src="../img/posts/gamemaker-reversing/editor.png" alt="screenshot of the gamemaker IDE with various panels open">
+          <div class="image-tag-layout">
+            <div class="image-tag">
+              comprehensive.
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <p>
+        GML is quite interesting, because it's fully dynamically typed - and I got curious. What exactly are the extents of the
+        dynamic typing? How is it actually implemented?
+      </p>
+
+      <p>
+        So, I decided to experiment with it a bit. The first thought was very simple - GML lets you treat functions as values
+        and assign them to variables, fairly standard stuff, but what if we assign some other value to a variable and try and
+        use it as a function?
+      </p>
+
+      <div class="image-box">
+        <a href="../img/posts/gamemaker-reversing/invoke-string.png">
+          <img src="../img/posts/gamemaker-reversing/invoke-string.png" alt="screenshot of a GML code snippet attempting to use a string as a function">
+          <div class="image-tag-layout">
+            <div class="image-tag">
+              surely nothing could go wrong?
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <code class="code-block">
+        > <b style="color:red"> Invalid callv target #2 </b>
+      </code>
+
+      <p>
+        Well, that's interesting - we can immediately see that it did <i>try</i> and run our 'function', and
+        that it has some kind of 'callv' instruction internally for function calls.
+        What if we print out a variable that contains a function pointer?
+      </p>
+
+      <div class="image-box">
+        <a href="../img/posts/gamemaker-reversing/print-function-var.png">
+          <img src="../img/posts/gamemaker-reversing/print-function-var.png" alt="screenshot of a GML snippet that prints a variable that a function was assigned to">
+          <div class="image-tag-layout">
+            <div class="image-tag">
+              using itself to print it, of course
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <code class="code-block">
+        > <b> 1280 </b>
+      </code>
+
+      <p>
+        Ooh! That's promising - it's spit out a plain number. Is that a function pointer of sorts, perhaps?
+        Let's see what happens if we...
+      </p>
+
+      <div class="image-box">
+        <a href="../img/posts/gamemaker-reversing/hardcoded-function-pointer.png">
+          <img src="../img/posts/gamemaker-reversing/hardcoded-function-pointer.png" alt="screenshot of a GML snippet that tries to use a variable assigned 1280 as a function">
+          <div class="image-tag-layout">
+            <div class="image-tag">
+              maybe...?
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <code class="code-block">
+        > <b> hello! </b>
+      </code>
+
+      <p>
+        It works! Looks like GML might have a predefined lookup table of functions? At the very least, the function pointer
+        seems consistent from run to run.
+      </p>
+
+      <p>
+        Now, this immediately opens up the possibility of doing absolutely incomprehensible obfuscation, since
+        we have the ability to pass around function pointers and potentially do math on them, without ever even
+        naming the actual functions they refer to.
+      </p>
+
+      <p>
+        But! What's more interesting would be finding out what function a given value points at. Is there a way to do that?
+      </p>
+
+      <p>
+        As it turns out, yes, GML has a <code><b>script_get_name()</b></code> function, which is <i>supposed</i> to be for
+        looking up the name of a custom script given a reference to it, but if we're lucky, it might also work on built in function pointers.
+      </p>
+
+      <div class="image-box">
+        <a href="../img/posts/gamemaker-reversing/name-of-pointer.png">
+          <img src="../img/posts/gamemaker-reversing/name-of-pointer.png" alt="screenshot of a GML snippet that calls script_get_name() on the value 42">
+          <div class="image-tag-layout">
+            <div class="image-tag">
+              maybe...?
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <code class="code-block">
+        > <b> view_set_visible </b>
+      </code>
+
+      <p>
+        It sure does! Apparently, script pointer 42 corresponds to <code>view_set_visible</code>. And with that, we now have the ability to print out an entire list of EVERYTHING that internally uses a script pointer...
+      </p>
+
+      <div class="image-box">
+        <a href="../img/posts/gamemaker-reversing/iterate-names.png">
+          <img src="../img/posts/gamemaker-reversing/iterate-names.png" alt="screenshot of a GML snippet that iteratively calls script_get_name and prints the results">
+          <div class="image-tag-layout">
+            <div class="image-tag">
+              what could there be??
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <p>
+        I won't put the full list here, because it's Very Long (almost 3000 functions), but this spits out the
+        index and name of everything that gamemaker considers to be a 'script', which includes the entire standard API, and - wait, what's <i>this?!</i>
+      </p>
+
+      <code class="code-block">
+        2504 is @@NewGMLObject@@<br>
+        2505 is @@NewGMLArray@@<br>
+        2506 is @@This@@<br>
+        2507 is @@Global@@<br>
+        2508 is @@try_hook@@<br>
+        2509 is @@try_unhook@@<br>
+        2510 is @@throw@@<br>
+        2511 is @@finish_catch@@<br>
+        2512 is @@finish_finally@@<br>
+        2513 is $PRINT<br>
+        2514 is $FAIL<br>
+        2515 is $ERROR<br>
+        2516 is ERROR<br>
+        2517 is testFailed<br>
+        2518 is @@typeof@@<br>
+        2519 is @@new@@<br>
+        2520 is @@delete@@<br>
+        2521 is exception_unhandled_handler<br>
+        2522 is @@instanceof@@<br>
+        2523 is @@Null@@<br>
+        2524 is @@NullObject@@<br>
+        2525 is @@Other@@<br>
+        2526 is @@GetInstance@@<br>
+        2527 is @@GlobalScope@@<br>
+        2528 is @@NewObject@@<br>
+        2529 is @@NewProperty@@<br>
+        2530 is @@CopyStatic@@<br>
+        2531 is @@SetStatic@@<br>
+      </code>
+
+      <p>
+        Those are definitely not functions that we can normally access through GML.. it looks like we've uncovered some special
+        internal operations that are invoked by certain keywords?
+      </p>
+
+      <p>
+        Well, since they have pointers, what if we assign those pointers to variables and call them manually anyway?
+      </p>
+
+      <div class="image-box">
+        <a href="../img/posts/gamemaker-reversing/manual-error.png">
+          <img src="../img/posts/gamemaker-reversing/manual-error.png" alt="screenshot of a GML snippet that calls the $ERROR internal function, showing an error window popup">
+          <div class="image-tag-layout">
+            <div class="image-tag">
+              oh hey!
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <p>
+        Neat! We can manually invoke <code>$ERROR</code> and the game pops up an error window with the text we passed in.
+        What else can we do with this?
+      </p>
+
+      <p>
+        <code>$PRINT</code> seems to let us print directly to console without any automatic line breaks or formatting,
+        <code>$FAIL</code> is just another error popup, <code>@@typeof@@</code>, <code>@@new@@</code>, and <code>@@delete@@</code> all just
+        act as their respective keywords (perhaps unsurprisingly)..
+
+
+      <p>
+        But I'm much more curious about the ones that seem related to try-catch keywords - can we write a custom try-catch block just by
+        calling the hook and unhook functions appropriately?
+      </p>
+
+
+      <div class="image-box">
+        <a href="../img/posts/gamemaker-reversing/trycatch-attempt-1.png">
+          <img src="../img/posts/gamemaker-reversing/trycatch-attempt-1.png" alt="screenshot of a GML snippet that attempts to replace try-throw-catch keywords with internal function calls">
+          <div class="image-tag-layout">
+            <div class="image-tag">
+              surely it's not that simple?
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <p>
+        Unfortunately... it's not that simple. This doesn't even spit out an error, it just crashes the game immediately :(
+      </p>
+
+      <p>
+        It's gonna take some experimentation to figure this one out!
+      </p>
+
+      <div class="link-box">
+        <div>
+          <h3 class="link-box-title">template link box</h3>
+          <p class="link-box-text">just checking it fits this width!</p>
+        </div>
+        <div class="link-icons">
+          <a href="../posts/post-template.html">
+            <img class="link-icon" src="../img/icon/link-open.svg" alt="Icon link to full post page">
+          </a>
+        </div>
+      </div>
+
+
+      <p class="quote-text">
+
+      </p>
+    </article>
+  </div>
+</div>
+</body>
+</html>
