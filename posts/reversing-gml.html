@@ -150,7 +150,7 @@
       </code>
 
       <p>
-        It sure does! Apparently, script pointer 42 corresponds to <code>view_set_visible</code>. And with that, we now have the ability to print out an entire list of EVERYTHING that internally uses a script pointer...
+        It sure does! Apparently, script pointer 42 corresponds to <code>view_set_visible</code> (an api function). And with that, we now have the ability to print out an entire list of EVERYTHING that internally uses a script pointer...
       </p>
 
       <div class="image-box">
@@ -253,24 +253,23 @@
       </p>
 
       <p>
-        It's gonna take some experimentation to figure this one out!
+        And, after much experimentation, I remain somewhat clueless about how the try/catch system works internally - <code>@@try_hook@@</code> <i>does</i>
+        initialize exception catching for a scope and catches things that are thrown.. but then execution just evaporates into the void.
       </p>
 
-      <div class="link-box">
-        <div>
-          <h3 class="link-box-title">template link box</h3>
-          <p class="link-box-text">just checking it fits this width!</p>
-        </div>
-        <div class="link-icons">
-          <a href="../posts/post-template.html">
-            <img class="link-icon" src="../img/icon/link-open.svg" alt="Icon link to full post page">
-          </a>
-        </div>
-      </div>
+      <p>
+        Interestingly, <code>@@try_hook@@</code> takes two number (pointer? handle?) parameters, but most values of the first seem to immediately crash,
+        and it's unclear what effect the second has. (values of 0,0 cause execution to jump back to the start of the event after catching an exception,
+        but that's the closest I've found to actual try-catch behaviour)
+      </p>
 
+      <p>
+        However! Gamemaker is free, and GML is easy, so if anyone else out there wants to dig deeper on this (or the numerous other internal APIs I didn't mention),
+        I'd love to hear your findings! Send me a message through whatever contact option you prefer :)
+      </p>
 
       <p class="quote-text">
-
+        try catch this
       </p>
     </article>
   </div>
