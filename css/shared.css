@@ -8,9 +8,12 @@
   src: url('font/Tommy Soft.otf');
 }
 
+@font-face {
+  font-family: JetBrainsMono;
+  src: url('font/JetBrainsMono.ttf');
+}
+
 .root {
-
-
   --HEADER_FONT_SIZE: 5rem;
   --TITLE_FONT_SIZE: 4rem;
   --BODY_FONT_SIZE: 1.1rem;
@@ -41,6 +44,23 @@
   text-align: center;
   align-content: center;
   margin: 0;
+}
+
+code {
+  font-family: JetBrainsMono, monospace;
+  text-align: left;
+}
+
+.code-block {
+  display: inline-block;
+  color: white;
+  margin: 0.5rem;
+  padding: 1rem 3rem;
+  border: 0.25rem solid var(--CRYSTAL_BORDER_COL);
+  box-shadow: 0 0 2rem rgba(0, 0, 0, 0.3), inset 0 0 2rem rgba(120, 50, 255, 0.3);
+  border-radius: 1.5rem;
+  background: rgba(15, 15, 50, 0.7);
+  background-clip: padding-box;
 }
 
 a:link:not(.no-style-link), a:visited:not(.no-style-link) {

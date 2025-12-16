@@ -1,0 +1,17 @@
+voxel rendering tech
+high performance opengl
+hlsl interfaces
+randomizers
+procgen
+unity shader cross compatibility library
+raymarching / artistic shaders
+font rendering
+davinci resolve unused features
+level/game design
+toon shading
+mora jai box
+gamemaker reverse engineering
+ccd in 2D with dynamic shapes
+better custom unity shader editor
+ui engines
+
